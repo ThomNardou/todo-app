@@ -4,6 +4,7 @@ const router = require('../../routes/index.js');
 const UserModel = require('../../database/models/user.model.js');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(cookieParser());
@@ -31,7 +32,7 @@ describe('user', () => {
         expect(res.body).toEqual('Un compte avec cet email exist déjà!');
     })
 
-    // Correction code TODO
+    // À corriger dans le code code TODO
     // it('POST 400 Create user with a password with 4 char', async() => {
 
     //     const res = await request(app)
@@ -41,4 +42,55 @@ describe('user', () => {
         
     //         expect(res.body).toEqual('Le mot de passe fait moins de 8 carctères');
     // })
+
+    it('GET 200 Get currrent user', async() => {
+        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
+
+        const userFound = await UserModel.findOne({ email: 'test@example.com' });
+
+        if (!userFound) {
+            throw new Error('User not found');
+        }
+        const token = jwt.sign({}, require('../../env/keys/index.js'), {
+            subject: userFound._id.toString(),
+            expiresIn: 60 * 60 * 24 * 30 * 6,
+            algorithm: 'RS256',
+        })
+        request(app).get('/api/user/').set('Cookie', `token=${token}`).expect(200);
+    })
+
+    it('GET 404 Get currrent user', async() => {
+        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
+
+        const userFound = await UserModel.findOne({ email: 'test@example.com' });
+
+        if (!userFound) {
+            throw new Error('User not found');
+        }
+        const token = jwt.sign({}, require('../../env/keys/index.js'), {
+            subject: userFound._id.toString(),
+            expiresIn: 60 * 60 * 24 * 30 * 6,
+            algorithm: 'RS256',
+        })
+        request(app).get('/api/user/').set('Cookie', `token=${token}`).expect(200);
+    })
+
+    it('DELETE 200 edit user', async() => {
+        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
+
+        const userFound = await UserModel.findOne({ email: 'test@example.com' });
+
+        if (!userFound) {
+            throw new Error('User not found');
+        }
+        const token = jwt.sign({}, require('../../env/keys/index.js'), {
+            subject: userFound._id.toString(),
+            expiresIn: 60 * 60 * 24 * 30 * 6,
+            algorithm: 'RS256',
+        })
+        await request(app).delete('/api/user/delete').set('Cookie', `token=${token}`).expect(200);
+
+        const userNotExist = await UserModel.findOne({ email: 'test@example.com' });
+        expect(userNotExist).toBeNull();
+    })
 })
