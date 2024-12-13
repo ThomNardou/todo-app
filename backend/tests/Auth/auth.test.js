@@ -22,10 +22,12 @@ describe('Authentification', () => {
 
         await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)})
 
-        await request(app)
+        const response = await request(app)
             .post('/api/auth')
             .send({ email: 'test@example.com', password: 'test' })
             .expect(200);
+
+        expect(response.body).toEqual({email: 'test@example.com'})
     })
     it('POST 400 Connect with not valid credentials', async() => {
 
