@@ -40,7 +40,7 @@ describe('user', () => {
     //         .send({ email: 'test@example.com', password: '1234', name:"John Doe" })
     //         .expect(400);
         
-    //         expect(res.body).toEqual('Le mot de passe fait moins de 8 carctères');
+    //         expect(res.body).toEqual('Le mot de passe fait moins de 8 caractères');
     // })
 
     it('GET 200 Get currrent user', async() => {
@@ -51,31 +51,28 @@ describe('user', () => {
         if (!userFound) {
             throw new Error('User not found');
         }
-        const token = jwt.sign({}, require('../../env/keys/index.js'), {
+        const token = await jwt.sign({}, require('../../env/keys/index.js'), {
             subject: userFound._id.toString(),
             expiresIn: 60 * 60 * 24 * 30 * 6,
             algorithm: 'RS256',
         })
-        request(app).get('/api/user/').set('Cookie', `token=${token}`).expect(200);
+        const res = await request(app).get('/api/user').set('Cookie', `token=${token}`).expect(200);
+
+        expect(res.body).toEqual({ email: 'test@example.com' });
     })
 
-    it('GET 404 Get currrent user', async() => {
-        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
-
-        const userFound = await UserModel.findOne({ email: 'test@example.com' });
-
-        if (!userFound) {
-            throw new Error('User not found');
-        }
+    it('GET 404 User does not exist', async() => {
         const token = jwt.sign({}, require('../../env/keys/index.js'), {
-            subject: userFound._id.toString(),
+            subject: "675bef360b8f6e9966770a3d",
             expiresIn: 60 * 60 * 24 * 30 * 6,
             algorithm: 'RS256',
         })
-        request(app).get('/api/user/').set('Cookie', `token=${token}`).expect(200);
+
+        const res  = await request(app).get('/api/user').set('Cookie', `token=${token}`).expect(404);
+        expect(res.body).toBeNull();
     })
 
-    it('DELETE 200 edit user', async() => {
+    it('DELETE 200 delete user', async() => {
         await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
 
         const userFound = await UserModel.findOne({ email: 'test@example.com' });
