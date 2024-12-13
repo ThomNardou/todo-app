@@ -60,6 +60,7 @@ describe('Test for the todos', () => {
         const response = request(app).post('/add').send({text: 'test', completed: false}).set('Cookie', `token=${token}`);
 
         expect((await response).status).toBe(200);
+        expect((await response).body).toBeNull();
 
     })
 
@@ -71,11 +72,15 @@ describe('Test for the todos', () => {
         if (!userFound) {
             throw new Error('User not found');
         }
+<<<<<<< Updated upstream
+=======
+        
+
+>>>>>>> Stashed changes
         const todo = await TodoModel.create({text: 'test', completed: false, user_id: userFound._id.toString()});
 
         
         const response = request(app).post(`/${todo._id.toString()}`);
-        console.log((await response).body);
 
         expect((await response).status).toBe(200);
         expect((await response).body).toBeNull();

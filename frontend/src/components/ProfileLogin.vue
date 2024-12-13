@@ -36,6 +36,7 @@ const onSubmit = async (formValues: Record<string, any>) => {
   >
     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
       <h1
+        id="title"
         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
       >
         Connectez-vous
@@ -69,6 +70,7 @@ const onSubmit = async (formValues: Record<string, any>) => {
         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
           Avez-vous délà un compte?
           <a
+            id="register"
             href="/register"
             class="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >Créer votre compte</a

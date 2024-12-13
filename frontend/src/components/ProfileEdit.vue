@@ -83,6 +83,7 @@ const location = computed(() => currentUser?.location);
           <div class="or"><span>ou</span></div>
           <p class="text-center text-sm text-gray-500">
             <a
+              id="delete"
               @click="onDelete"
               href="#"
               class="font-semibold leading-6 text-rose-500 hover:text-rose-400"

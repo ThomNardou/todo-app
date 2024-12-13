@@ -75,7 +75,7 @@ const imgUrlProfile = new URL('../assets/funny-smile.png', import.meta.url).href
           <ThemeSwitcher />
           <!-- Profile dropdown -->
           <Menu as="div" class="relative ml-3 profile-menu" v-if="isAuthenticated">
-            <div>
+            <div id="pfpDrop">
               <MenuButton
                 class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               >
@@ -95,7 +95,7 @@ const imgUrlProfile = new URL('../assets/funny-smile.png', import.meta.url).href
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
-                <MenuItem v-slot="{ active }">
+                <MenuItem id="profile" v-slot="{ active }">
                   <a
                     href="/profile"
                     :class="[active ? 'bg-gray-100' : '', 'flex px-4 py-2 text-sm text-gray-700']"
