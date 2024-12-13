@@ -14,10 +14,10 @@ app.use(cookieParser());
 app.use('/', todoRouter);
 
 describe('Test for the todos', () => {
-
+    const createUser = async () => await await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)});
     it('Test to Get TODO from user', async () => {
-        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)})
-
+        // Arrange
+        await createUser();
         const userFound = await UserModel.findOne({ email: 'test@example.com' });
 
         if (!userFound) {
@@ -31,19 +31,21 @@ describe('Test for the todos', () => {
         })
 
         await TodoModel.create({text: 'test', completed: false, user_id: userFound._id.toString()});
-        
-        const response = request(app).get('/').set('Cookie', `token=${token}`);
-        
-        expect((await response).status).toBe(200);
 
-        expect((await response).body[0].text).toBe('test');
-        expect((await response).body[0].completed).toBe(false);
-        expect((await response).body[0].user_id).toEqual(userFound._id.toString());
+        // Act
+        const response = await request(app).get('/').set('Cookie', `token=${token}`);
+
+        // Assert
+        expect(response.status).toBe(200);
+        expect(response.body[0].text).toBe('test');
+        expect(response.body[0].completed).toBe(false);
+        expect(response.body[0].user_id).toEqual(userFound._id.toString());
         
     })
 
     it('Test to Post TODO from user', async () => {
-        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)})
+        // Arrange
+        await createUser();
 
         const userFound = await UserModel.findOne({ email: 'test@example.com' });
 
@@ -56,16 +58,18 @@ describe('Test for the todos', () => {
             expiresIn: 60 * 60 * 24 * 30 * 6,
             algorithm: 'RS256',
         })
+        // Act
+        const response = await request(app).post('/add').send({text: 'test', completed: false}).set('Cookie', `token=${token}`);
 
-        const response = request(app).post('/add').send({text: 'test', completed: false}).set('Cookie', `token=${token}`);
-
-        expect((await response).status).toBe(200);
-        expect((await response).body).toBeNull();
+        // Assert
+        expect(response.status).toBe(200);
+        expect(response.body).toBeNull();
 
     })
 
     it('Test to delete TODO from user', async () => {
-        await UserModel.create({email: 'test@example.com', password: await bcrypt.hash('test', 8)})
+        // Arrange
+        await createUser();
 
         const userFound = await UserModel.findOne({ email: 'test@example.com' });
 
@@ -74,10 +78,11 @@ describe('Test for the todos', () => {
         }
         const todo = await TodoModel.create({text: 'test', completed: false, user_id: userFound._id.toString()});
 
-        
-        const response = request(app).post(`/${todo._id.toString()}`);
+        // Act
+        const response = await request(app).post(`/${todo._id.toString()}`);
 
-        expect((await response).status).toBe(200);
-        expect((await response).body).toBeNull();
+        // Assert
+        expect(response.status).toBe(200);
+        expect(response.body).toBeNull();
     })
 })
