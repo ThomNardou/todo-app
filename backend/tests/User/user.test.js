@@ -58,7 +58,7 @@ describe('user', () => {
         })
         const res = await request(app).get('/api/user').set('Cookie', `token=${token}`).expect(200);
 
-        expect(res.body).toEqual({ email: 'test@example.com' })
+        expect(res.body).toEqual({ email: 'test@example.com' });
     })
 
     it('GET 404 User does not exist', async() => {
@@ -69,7 +69,7 @@ describe('user', () => {
         })
 
         const res  = await request(app).get('/api/user').set('Cookie', `token=${token}`).expect(404);
-        expect(res.body).toEqual(null)
+        expect(res.body).toBeNull();
     })
 
     it('DELETE 200 delete user', async() => {
