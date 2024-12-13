@@ -42,6 +42,7 @@ const {
     >{{ props.label }}</label
   >
   <input
+    id="todoName"
     :value="inputValue"
     :name="name"
     :type="type"

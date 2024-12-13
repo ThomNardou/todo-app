@@ -43,7 +43,7 @@ const onSubmit = async (formValues: Record<string, any>) => {
       </h1>
       <p v-if="errorMsg">
         <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
-          <span class="inline w-3 h-3 me-3 bg-red-500 rounded-full"></span>
+          <span class="errorMessage inline w-3 h-3 me-3 bg-red-500 rounded-full"></span>
           {{ errorMsg }}</span
         >
       </p>

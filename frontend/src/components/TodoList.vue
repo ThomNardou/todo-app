@@ -35,7 +35,7 @@ const deleteTodoItem = async (id: any) => {
         <AppSpinner />
       </template>
       <template v-else>
-        <ul role="list" class="mt-2 flex flex-col list-none">
+        <ul id="listOfTodo" role="list" class="mt-2 flex flex-col list-none">
           <li
             v-for="todo in allTodo"
             :key="todo._id"
@@ -51,13 +51,13 @@ const deleteTodoItem = async (id: any) => {
                 class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
               />
               <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                <label :for="todo._id" class="m-0">{{ todo.text }}</label>
+                <label id="todoValue" :for="todo._id" class="m-0">{{ todo.text }}</label>
               </div>
             </div>
             <div class="ml-4 flex-shrink-0">
               <TrashIcon
                 data-tooltip-target="tooltip-default"
-                class="h-5 w-5 stroke-white hover:stroke-black cursor-pointer"
+                class="trashIcon h-5 w-5 stroke-white hover:stroke-black cursor-pointer"
                 @click="deleteTodoItem(todo._id)"
               />
               <div
