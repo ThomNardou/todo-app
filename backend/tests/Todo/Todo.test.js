@@ -72,11 +72,6 @@ describe('Test for the todos', () => {
         if (!userFound) {
             throw new Error('User not found');
         }
-<<<<<<< Updated upstream
-=======
-        
-
->>>>>>> Stashed changes
         const todo = await TodoModel.create({text: 'test', completed: false, user_id: userFound._id.toString()});
 
         
