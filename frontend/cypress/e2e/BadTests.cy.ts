@@ -57,4 +57,37 @@ describe('Bad Tests', () => {
     cy.get('.inputErrorMessage').should('be.exist');
     cy.get('.inputErrorMessage').contains('Les mots de passe ne correspondent pas');
   });
+
+  ///////////////////////////////////////////////// TO DO //////////////////////////////////////////////////
+  it('Create todo with no title', () =>
+  {
+    cy.visit('/register');
+    cy.get("input[name='email']").type('test@test.ch');
+    cy.get("input[name='password']").type('12345678');
+    cy.get("input[name='confirmation']").type('12345678');
+    cy.get("button[type='submit']").click();
+
+    // Login Page
+    cy.visit('/login');
+    cy.get("input[name='email']").type('test@test.ch');
+    cy.get("input[name='password']").type('12345678');
+
+    cy.get("button[type='submit']").click();
+
+
+    cy.get('#submitTodo').click();
+    cy.get('.inputErrorMessage').should('be.exist');
+    cy.get('.inputErrorMessage').contains('Vous devez renseigner ce champ');
+  })
+
+  after(() => {
+    cy.visit('/');
+
+    // Home Page
+    cy.get('#pfpDrop').click();
+    cy.get('#profile').click();
+
+    // Profile Page
+    cy.get('#delete').click();
+  });
 });

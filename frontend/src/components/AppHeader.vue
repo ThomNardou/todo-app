@@ -104,7 +104,7 @@ const imgUrlProfile = new URL('../assets/funny-smile.png', import.meta.url).href
                     Mon Profile</a
                   >
                 </MenuItem>
-                <MenuItem v-slot="{ active }">
+                <MenuItem id="logout" v-slot="{ active }">
                   <a
                     href="#"
                     @click="emit('logout')"

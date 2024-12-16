@@ -1,14 +1,11 @@
 // https://on.cypress.io/api
-
 describe('Good Tests', () => {
   beforeEach(() => {
     cy.visit('/');
   });
 
-  it('Login Test', () => {
-    cy.visit('/');
-    // Login Page
-    cy.get('#register').click();
+  it('Sign up Test', () => {
+    cy.visit("/register")
 
     // Register Page
     cy.get("input[name='email']").type('test2@test.com');
@@ -66,14 +63,78 @@ describe('Good Tests', () => {
     cy.get('#listOfTodo > li').contains('div').should('not.exist');
   });
 
-  after(() => {
-    cy.visit('/');
+  it('Logout', () => {
+    // Login
+    cy.get("input[name='email']").type('test2@test.com');
+    cy.get("input[name='password']").type('12345678');
+    cy.get("button[type='submit']").click();
 
     // Home Page
     cy.get('#pfpDrop').click();
-    cy.get('#profile').click();
+    cy.get('#logout').click();
 
-    // Profile Page
-    cy.get('#delete').click();
-  });
+    cy.visit('/login');
+
+    // Login Page
+    cy.get("input[name='email']").type('test2@test.com');
+    cy.get("input[name='password']").type('12345678');
+
+    cy.get("button[type='submit']").click();
+
+    // Home Page
+    cy.get('#title').contains('Ajouter une tâche');
+  })
+
+  // TODO corriger dans le code l'edit du compte
+  // it('Edit account', () => {
+  //   // Login
+  //   cy.get("input[name='email']").type('test2@test.com');
+  //   cy.get("input[name='password']").type('12345678');
+  //   cy.get("button[type='submit']").click();
+  //
+  //   // Home Page
+  //   cy.visit('/profile');
+  //
+  //   // Edit Page
+  //   cy.get("input[name='name']").type('John Doe');
+  //   cy.get("input[name='address']").type('Route de Vennes');
+  //   cy.get("input[name='zip']").type('1001');
+  //   cy.get("input[name='location']").type('Lausanne');
+  //   cy.get("button[type='submit']").click();
+  //
+  //   // Home Page
+  //   cy.visit('/');
+  //   cy.visit('/profile');
+  //   cy.get("input[name='name']").should('contain', 'John Doe');
+  //   cy.get("input[name='address']").should('contain', 'Route de Vennes');
+  //   cy.get("input[name='zip']").should('contain', '1001');
+  //   cy.get("input[name='location']").should('contain', 'Lausanne');
+  // })
+
+  it('Delete account', () => {
+    // Login
+    cy.get("input[name='email']").type('test2@test.com');
+    cy.get("input[name='password']").type('12345678');
+    cy.get("button[type='submit']").click();
+
+    // Home Page
+    cy.visit('/profile');
+
+    cy.get("#delete").click();
+
+    cy.visit('/');
+    cy.get("input[name='email']").type('test2@test.com');
+    cy.get("input[name='password']").type('12345678');
+
+    cy.get("button[type='submit']").click();
+
+    cy.get('.errorMessage').should('be.exist');
+    cy.get('.errorMessage').contains('Utilisateur non trouvé');
+  })
+
+  it('Nav to about page', () => {
+    // Login
+    cy.visit('/about');
+    cy.get('h1').type('Todo App');
+  })
 });
