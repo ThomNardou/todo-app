@@ -5,7 +5,7 @@ describe('Good Tests', () => {
   });
 
   it('Sign up Test', () => {
-    cy.visit("/register")
+    cy.visit('/register');
 
     // Register Page
     cy.get("input[name='email']").type('test2@test.com');
@@ -83,7 +83,7 @@ describe('Good Tests', () => {
 
     // Home Page
     cy.get('#title').contains('Ajouter une tâche');
-  })
+  });
 
   // TODO corriger dans le code l'edit du compte
   // it('Edit account', () => {
@@ -120,7 +120,7 @@ describe('Good Tests', () => {
     // Home Page
     cy.visit('/profile');
 
-    cy.get("#delete").click();
+    cy.get('#delete').click();
 
     cy.visit('/');
     cy.get("input[name='email']").type('test2@test.com');
@@ -130,11 +130,11 @@ describe('Good Tests', () => {
 
     cy.get('.errorMessage').should('be.exist');
     cy.get('.errorMessage').contains('Utilisateur non trouvé');
-  })
+  });
 
   it('Nav to about page', () => {
     // Login
     cy.visit('/about');
     cy.get('h1').type('Todo App');
-  })
+  });
 });

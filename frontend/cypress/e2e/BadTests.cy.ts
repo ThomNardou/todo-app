@@ -59,8 +59,7 @@ describe('Bad Tests', () => {
   });
 
   ///////////////////////////////////////////////// TO DO //////////////////////////////////////////////////
-  it('Create todo with no title', () =>
-  {
+  it('Create todo with no title', () => {
     cy.visit('/register');
     cy.get("input[name='email']").type('test@test.ch');
     cy.get("input[name='password']").type('12345678');
@@ -74,11 +73,10 @@ describe('Bad Tests', () => {
 
     cy.get("button[type='submit']").click();
 
-
     cy.get('#submitTodo').click();
     cy.get('.inputErrorMessage').should('be.exist');
     cy.get('.inputErrorMessage').contains('Vous devez renseigner ce champ');
-  })
+  });
 
   after(() => {
     cy.visit('/');
