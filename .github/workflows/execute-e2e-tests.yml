@@ -1,0 +1,28 @@
+name: Run e2e tests
+
+on:
+  push:
+    branches:
+      - dev
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v1
+      - name: Run backend
+        run: |
+            cd backend/
+            npm install
+            npm run start
+
+      - name: Run cypress tests
+        run: |
+            cd frontend/
+            npm install
+            npm run test:e2e
