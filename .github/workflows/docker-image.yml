@@ -57,4 +57,4 @@ jobs:
       with:
           app-name: 'todo-app-thoti-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_e655e408095240dda86a94f6b40e79ce }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_cf7dba8986ea452c902c0682960e0648 }}
