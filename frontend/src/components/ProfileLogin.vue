@@ -36,12 +36,15 @@ const onSubmit = async (formValues: Record<string, any>) => {
   >
     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
       <h1
+        id="title"
         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
       >
         Connectez-vous
       </h1>
       <p v-if="errorMsg">
-        <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
+        <span
+          class="errorMessage flex items-center text-sm font-medium text-gray-900 dark:text-white me-3"
+        >
           <span class="inline w-3 h-3 me-3 bg-red-500 rounded-full"></span>
           {{ errorMsg }}</span
         >
@@ -69,6 +72,7 @@ const onSubmit = async (formValues: Record<string, any>) => {
         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
           Avez-vous délà un compte?
           <a
+            id="register"
             href="/register"
             class="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >Créer votre compte</a

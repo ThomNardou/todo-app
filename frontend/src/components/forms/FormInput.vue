@@ -42,6 +42,7 @@ const {
     >{{ props.label }}</label
   >
   <input
+    id="todoName"
     :value="inputValue"
     :name="name"
     :type="type"
@@ -54,7 +55,9 @@ const {
         : 'bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
     "
   />
-  <p v-if="errorMessage" class="pt-1 text-sm text-red-500 dark:text-rose-500">{{ errorMessage }}</p>
+  <p v-if="errorMessage" class="inputErrorMessage pt-1 text-sm text-red-500 dark:text-rose-500">
+    {{ errorMessage }}
+  </p>
 </template>
 
 <style scoped></style>
