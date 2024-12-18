@@ -1,9 +1,9 @@
 name: Run e2e tests
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   cypress-run:
