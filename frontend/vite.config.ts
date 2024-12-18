@@ -12,8 +12,8 @@ export default defineConfig({
   },
   server: {
     hmr: {
-      host: '127.0.0.1',
-      port: 5173
+      host: 'https://todo-app-thoti.azurewebsites.net',
+      port: 443
     },
     proxy: {
       '/api': {
