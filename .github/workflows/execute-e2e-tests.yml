@@ -21,7 +21,7 @@ jobs:
         run: |
             cd backend/
             npm ci
-            npm run start
+            npm run start &
 
       - name: Run cypress tests
         run: |
