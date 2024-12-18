@@ -11,9 +11,6 @@ export default defineConfig({
     }
   },
   server: {
-    hmr: {
-      host: 'https://todo-app-thoti.azurewebsites.net',
-    },
     proxy: {
       '/api': {
         target: 'https://todo-app-thoti-api.azurewebsites.net',
