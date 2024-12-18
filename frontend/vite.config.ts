@@ -17,7 +17,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://todo-app-thoti-api.azurewebsites.net',
         changeOrigin: true,
         secure: false
       }
